@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #14b8a6;
+  --color-primary-dark: #0d9488;
+  --color-primary-light: #5eead4;
+  --color-accent: #f97316;
+  --color-accent-dark: #ea580c;
+  --color-accent-light: #fb923c;
+  --color-dark: #0f172a;
+  --color-dark-lighter: #1e293b;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.button {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.search-input {
+  text-indent: 2.5rem;
+}
+
+.data-page-container {
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .data-page-container {
+    margin: 6rem auto;
+  }
+}
+
+.data-content {
+  margin: 18px;
+}
+
+@media (min-width: 768px) {
+  .data-content {
+    margin: 18px;
+  }
+}
+
+
+.map-title {
+  margin-top: 50px;
+}
+
+.map-container {
+  min-height: 100vh;
+}
+
+.feature-card {
+  padding: 8px;
+}
+
+.cta-card {
+  padding: 8px;
+}
+
+.onboarding-card {
+  padding: 32px;
+}
+
+@media (max-width: 768px) {
+  .onboarding-card {
+    padding: 20px;
+  }
+}
+
+.onboarding-icon-box {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .onboarding-icon-box {
+    padding: 16px;
+  }
+}
+
+.onboarding-button {
+  padding: 14px 32px;
+}
+
+@media (max-width: 768px) {
+  .onboarding-button {
+    padding: 12px 24px;
+  }
+}
+
+.onboarding-close-btn {
+  padding: 10px;
+}
+
+.cinema-table-cell {
+  padding: 1rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .cinema-table-cell {
+    padding: 1.25rem 1.5rem;
+  }
+}
