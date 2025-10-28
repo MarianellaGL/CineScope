@@ -2,7 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function buildQuery({ areaId = 3600286393, timeout = 25, extra = "" } = {}) {
+interface BuildQueryParams {
+  areaId?: number;
+  timeout?: number;
+  extra?: string;
+}
+
+function buildQuery({ areaId = 3600286393, timeout = 25, extra = "" }: BuildQueryParams = {}) {
   return `
     [out:json][timeout:${timeout}];
     area(id:${areaId})->.searchArea;
@@ -12,7 +18,7 @@ function buildQuery({ areaId = 3600286393, timeout = 25, extra = "" } = {}) {
   `;
 }
 
-async function fetchOverpassRaw(query) {
+async function fetchOverpassRaw(query: string) {
   let lastError;
   try {
     const res = await fetch(BASE_URL, {
@@ -41,9 +47,9 @@ export async function fetchCinemas(params = {}) {
 
   const rows = elements
     .filter(
-      (el) => el.type === "node" || el.type === "way" || el.type === "relation"
+      (el: any) => el.type === "node" || el.type === "way" || el.type === "relation"
     )
-    .map((el) => {
+    .map((el: any) => {
       const lat = el.lat ?? el.center?.lat ?? el.bounds?.minlat;
       const lon = el.lon ?? el.center?.lon ?? el.bounds?.minlon;
       return {
@@ -56,19 +62,24 @@ export async function fetchCinemas(params = {}) {
         tags: el.tags || {},
       };
     })
-    .filter((r) => Number.isFinite(r.lat) && Number.isFinite(r.lon));
+    .filter((r: any) => Number.isFinite(r.lat) && Number.isFinite(r.lon));
 
   return rows;
 }
 
-export function useCinemas(filters = {}) {
+interface CinemaFilters {
+  province?: string;
+  q?: string;
+}
+
+export function useCinemas(filters: CinemaFilters = {}) {
   const { province, q } = filters;
 
   return useQuery({
     queryKey: ["cinemas", { province, q }],
     queryFn: async () => {
       const all = await fetchCinemas();
-      return all.filter((r) => {
+      return all.filter((r: any) => {
         const byProv = province
           ? (r.province || "").toLowerCase().includes(province.toLowerCase())
           : true;

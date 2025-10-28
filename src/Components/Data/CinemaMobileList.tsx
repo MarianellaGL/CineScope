@@ -1,14 +1,5 @@
 import { CinemaCard } from "./CinemaCard";
-
-interface Cinema {
-  id: number;
-  name: string;
-  city: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  screens: number;
-}
+import type { Cinema } from "../../types/cinema";
 
 interface CinemaMobileListProps {
   cinemas: Cinema[];

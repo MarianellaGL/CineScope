@@ -1,16 +1,9 @@
-import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
+import { AdvancedMarker } from "@vis.gl/react-google-maps";
 import { useMapStore } from "../stores/mapStore";
+import type { Cinema } from "../types/cinema";
 
 interface CinemaMarkerProps {
-  cinema: {
-    id: number;
-    name: string;
-    city: string;
-    address: string;
-    latitude: number;
-    longitude: number;
-    screens: number;
-  };
+  cinema: Cinema;
 }
 
 export const CinemaMarker = ({ cinema }: CinemaMarkerProps) => {

@@ -22,7 +22,6 @@ const hasSimilarLocation = (
 export const useGeolocation = () => {
   const [state, setState] = useState<GeolocationState>(() => {
     const cachedLocation = localStorage.getItem(LOCATION_STORAGE_KEY);
-    const cachedProvince = localStorage.getItem(PROVINCE_STORAGE_KEY);
 
     return {
       loading: !cachedLocation,

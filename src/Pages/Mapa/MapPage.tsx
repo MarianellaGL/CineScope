@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { Map } from "@vis.gl/react-google-maps";
-import { darkMapStyles } from "../../constants/mapStyles";
 import { MapHeader } from "../../Components/MapHeader";
 import { SearchBar } from "../../Components/SearchBar";
 import { MapControls } from "../../Components/MapControls";

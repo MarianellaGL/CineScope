@@ -8,6 +8,14 @@ RUN npm ci
 
 COPY . .
 
+# Accept build arguments for Vite environment variables
+ARG VITE_BASE_GOOGLE_CLOUD_KEY
+ARG VITE_BASE_URL=https://overpass-api.de/api/interpreter
+
+# Set environment variables for Vite build
+ENV VITE_BASE_GOOGLE_CLOUD_KEY=$VITE_BASE_GOOGLE_CLOUD_KEY
+ENV VITE_BASE_URL=$VITE_BASE_URL
+
 RUN npm run build
 
 FROM nginx:alpine

@@ -1,16 +1,5 @@
 import { motion } from "framer-motion";
-
-interface Cinema {
-  id: number | string;
-  name: string;
-  city: string;
-  address?: string;
-  latitude: number;
-  longitude: number;
-  screens?: number;
-  province?: string;
-  tags?: Record<string, any>;
-}
+import type { Cinema } from "../types/cinema";
 
 interface CinemaInfoCardProps {
   cinema: Cinema;

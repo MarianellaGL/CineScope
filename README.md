@@ -1,73 +1,108 @@
-# React + TypeScript + Vite
+# About
+CineScope es un proyecto construido con React + TypeScript + Vite, orientado a la exploración de cines en Argentina. La idea central es ofrecer una interfaz moderna que permita visualizar cines tanto en un mapa interactivo como en una tabla de datos, utilizando información real obtenida a través de Overpass API (que consulta datos de OpenStreetMap).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+El proyecto está configurado para ser contenedorizado con Docker y servido a través de Nginx, lo cual permite un despliegue limpio y escalable. La base está bien estructurada y modular, con una clara separación entre páginas (landing, mapa y datos).
 
-Currently, two official plugins are available:
+# Objetivos
+- Mostrar los cines disponibles en Argentina en formato de mapa y tabla.
+- Practicar integración con APIs públicas (Overpass).
+- Implementar arquitectura modular y escalable con React Router y React Query.
+- Explorar el despliegue en Docker con Nginx.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Arquitectura general
 
-## React Compiler
+Durante la fase inicial se evaluaron varias opciones para el stack. Finalmente, se eligió la siguiente combinación:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + TypeScript: permite crear componentes reutilizables con tipado estático, reduciendo errores.
+- Vite: facilita un entorno de desarrollo veloz y un build liviano para producción.
+- React Router DOM: manejo de rutas SPA (landing, mapa y tabla).
+- React Query: administración del estado asincrónico y caché de peticiones.
+- Tailwind CSS: para maquetado rápido y consistente, combinando con un estilo visual inspirado en un cielo estrellado.
+- Framer Motion: para animaciones suaves y microinteracciones.
+- vis.gl o Google Maps API: para renderizar los puntos de los cines sobre un mapa.
+- Docker + Nginx: para empaquetar el proyecto y servir el build de forma óptima.
 
-## Expanding the ESLint configuration
+# Diseño y arquitectura
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+ El proyecto se estructura en tres páginas principales:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+ ### Landing: 
+ primera vista del sitio, con presentación visual y enlaces de navegación.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Map:
+ visualización geográfica de los cines usando vis.gl o Google Maps.
+ 
+ ### Data:
+ tabla responsive que lista los cines, su ciudad, dirección y cantidad de pantallas.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Arquitectura interna:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Estructura modular con carpetas separadas para pages, components, lib y hooks.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Componentes reutilizables para elementos de UI y visualización.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Hooks personalizados para el manejo de datos de Overpass.
+
+- Configuración de ESLint y TypeScript para mantener consistencia en el código.
+
+# Overpass API
+El corazón del proyecto está en el consumo de Overpass API, una interfaz que permite ejecutar consultas sobre la base de datos de OpenStreetMap.
+La query utilizada busca todas las entidades con la etiqueta       `amenity=cinema` dentro del área de Argentina.
+
+Ejemplo de consulta:
+
+`[out:json][timeout:25];` \
+`area(id:3600286393)->.searchArea;   `\
+`nwr["amenity"="cinema"](area.searchArea);`\
+`out geom;`
+
+El resultado se obtiene en formato JSON, y luego se procesa para mostrar:
+
+- Nombre del cine.
+- Ciudad y dirección.
+- Cantidad de pantallas (si la información está disponible).
+- Coordenadas para ubicarlo en el mapa.
+
+El fetching se maneja con React Query, lo que permite cachear las peticiones, controlar errores y mostrar estados de carga o retry en caso de fallas.
+
+## Desarrollo paso a paso
+
+- Configuración del entorno: instalación de Vite, TypeScript y ESLint.
+- Creación de la landing page: diseño del hero principal con fondo degradado y animaciones.
+- Implementación del mapa: integración con vis.gl / Google Maps para mostrar marcadores de los cines.
+- Construcción de la tabla de datos: listado de los cines con columnas alineadas y diseño responsive.
+- Optimización del fetching: integración de React Query y hooks personalizados para separar la lógica de la UI.
+- Testing visual y ajustes de responsividad: verificación en distintos tamaños de pantalla.
+- Preparación del entorno de producción: build optimizado con Vite y empaquetado en Docker.
+
+## Despliegue con Docker y Nginx
+
+El proyecto está configurado para ejecutarse dentro de un contenedor Docker. El Dockerfile genera el build de Vite y luego copia los archivos resultantes al servidor Nginx, que sirve el sitio estático.
+
+Pasos principales:
+ - Ejecutar npm run build para generar /dist.
+ - Construir la imagen con docker build -t cinescope ..
+ - Ejecutar con docker run -p 8080:80 cinescope.
+ - O usar docker compose up --build para levantar el entorno completo.
+ - El archivo nginx.conf incluye el fallback a index.html para manejar correctamente las rutas del SPA.
+
+ 
+# Instalación y uso
+
+- Instalar dependencias 
+ `npm install`
+
+- Correr el entorno de desarrollo
+ `npm run dev`
+
+
+# Uso con Docker
+El proyecto incluye Dockerfile y docker-compose.yml para levantar la aplicación fácilmente en contenedor.
+
+`docker build -t cinescope`
+`docker run -p 8080:80 cinescope`
+
+O directamente con docker-compose:
+`docker compose up --build`
+
+Esto construye la imagen y la sirve con Nginx utilizando el archivo nginx.conf incluido.

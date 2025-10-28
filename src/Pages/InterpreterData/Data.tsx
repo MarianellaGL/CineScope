@@ -4,6 +4,7 @@ import { transformCinemasArray } from "../../utils/cinemaTransformer";
 import { DataHeader } from "../../Components/Data/DataHeader";
 import { CinemaMobileList } from "../../Components/Data/CinemaMobileList";
 import { CinemaTable } from "../../Components/Data/CinemaTable";
+import type { Cinema } from "../../types/cinema";
 
 export const Data = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const Data = () => {
 
   const cinemas = apiCinemas ? transformCinemasArray(apiCinemas) : [];
 
-  const handleViewOnMap = (cinema: any) => {
+  const handleViewOnMap = (cinema: Cinema) => {
     navigate("/map", { state: { selectedCinema: cinema } });
   };
 

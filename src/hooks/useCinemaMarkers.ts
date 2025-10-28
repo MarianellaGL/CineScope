@@ -2,16 +2,7 @@ import { useEffect } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMapStore } from "../stores/mapStore";
 import { getCinemaMarkerSVG, getCinemaMarkerHoverSVG } from "../constants/markerSVG";
-
-interface Cinema {
-  id: number;
-  name: string;
-  city: string;
-  address: string;
-  latitude: number;
-  longitude: number;
-  screens: number;
-}
+import type { Cinema } from "../types/cinema";
 
 interface UseCinemaMarkersProps {
   cinemas: Cinema[];

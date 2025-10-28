@@ -1,24 +1,4 @@
-interface ApiCinema {
-  id: string;
-  name: string;
-  city: string;
-  province: string;
-  lat: number;
-  lon: number;
-  tags: Record<string, any>;
-}
-
-interface Cinema {
-  id: number | string;
-  name: string;
-  city: string;
-  address?: string;
-  latitude: number;
-  longitude: number;
-  screens?: number;
-  province?: string;
-  tags?: Record<string, any>;
-}
+import type { Cinema, ApiCinema } from "../types/cinema";
 
 export const transformCinemaData = (apiCinema: ApiCinema): Cinema => {
   return {

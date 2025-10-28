@@ -22,7 +22,7 @@ export const getCinemaMarkerSVG = () => `
   </svg>
 `;
 
-export const getCinemaMarkerHoverSVG = (cinemaId: number) => `
+export const getCinemaMarkerHoverSVG = (cinemaId: number | string) => `
   <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
     <defs>
       <filter id="glow-camera-${cinemaId}">

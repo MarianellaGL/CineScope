@@ -1,18 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 import { useMapStore } from "../stores/mapStore";
-
-interface Cinema {
-  id: number | string;
-  name: string;
-  city: string;
-  address?: string;
-  latitude: number;
-  longitude: number;
-  screens?: number;
-  province?: string;
-  tags?: Record<string, any>;
-}
+import type { Cinema } from "../types/cinema";
 
 export const useSearch = (cinemas: Cinema[]) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,7 +36,7 @@ export const useSearch = (cinemas: Cinema[]) => {
         filteredCinemas.forEach((cinema) => {
           bounds.extend({ lat: cinema.latitude, lng: cinema.longitude });
         });
-        map.fitBounds(bounds, { padding: 80 });
+        map.fitBounds(bounds, 80);
         setSelectedCinema(null);
       }
     }

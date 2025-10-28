@@ -67,8 +67,10 @@ export const useMarkerClusterer = () => {
       map,
       renderer,
       algorithm: new GridAlgorithm({ maxZoom: 15, gridSize: 80 }),
-      onClusterClick: (event, cluster, map) => {
-        map.fitBounds(cluster.bounds);
+      onClusterClick: (_event, cluster, map) => {
+        if (cluster.bounds) {
+          map.fitBounds(cluster.bounds);
+        }
       },
     });
 
